@@ -1,0 +1,156 @@
+REDUX
+WE always create a new state object, without modifying the old state
+we do this because, to keep track of all the states at a particular point in time.
+When we modify the old state, we actually can't figure out what was the old state?
+ans we won't be able to figure out when it has been changed. So that is the reason
+we always create a new state object and store that in the store.
+
+
+import {createStore, applymiddleware, combineReducers} from 'redux';
+import logger from 'redux-logger';
+
+const reducer = (state, action) => {
+	switch(action.type){
+		case "":
+		....
+		break;
+		case "":
+		...
+		break;
+	}	
+	return store;
+};
+const store = createStore(combineReducers({reducer1, reducer2..}), obj, applyMiddleware(logger())); 
+
+store.subscribe({
+	console.log("updation ", store.getState());
+});
+
+store.dispatch({
+	type: "",
+	payload: 6
+});
+
+---------
+npm install --save react-redux
+
+import {connect} from 'react-redux';
+
+const mapStateToProps = (store) => {
+	return {
+		user: state.userReducer
+		math: state.mathReducer
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setName: (name) => {
+			return dispatch({
+				type: 'SET_NAME',
+				payload: name 
+			});
+		}
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+REDUX THUNK
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setName: (name) => {
+			dispatch({
+				type: 'SET_NAME',
+				name: name
+			})
+		}
+	}
+}
+
+
+***IMPORTANT***
+
+we are creating a new object instace every time, when there is a state change
+this is the new feature available in React, so when we do this the previous state and the
+current state comparision will be easier because we have only two objects. BUT
+in Angular when this concept is compared each time a modification is made the digest cycle within angular
+observes the changes using $watch and $watch observes the changes by comparing 1000 to 2000 prev
+values. So comparing two objects is easier than comparing each object property in React and this is 
+better than Angular because in Angular the digest cycle makes around thousand comparisions which 
+is a tedious process.
+
+On the other way round, even in React it is considered a bit inefficient because each time
+the state is changed we are creating a new object.
+
+------------
+REDUX THUNK
+
+Generally, in redux we dispatch actions that are needed to be processed by the
+corresponding reducer, so we write "store.dispatch" or we can dispatch actions when any event
+happens like clicking on a button. Here in our example look into Imp.js
+
+USING REDUX-THUNK
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setName: () => {
+			dispatch(setName());
+		}
+	}
+}
+here in the above code we are dispatching an action by calling the setName method, finally
+the the setName in dispatch(setName())-->must return something like 
+dispatch({
+	type: '',
+	payload: some_val
+}) ONLY AFTER THE GETTING THE DATA FROM THE URL
+so the over all is 
+dispatch(dispatch({
+	type:'',
+	payload: som_val
+}))
+Observr two dispatches here this is how thunk SYNTAX IS..
+
+BEFORE USING THUNK
+
+we have 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		setName: () => {
+			dispatch(setName());
+		}
+	}
+}
+BUT BUT the setName()-->here returns ONLY THE object within dispatch 
+which is
+ {
+	type: '',
+	payload: some_val
+}-->this doesn't have the "dispatch" again
+--------------------
+GENERAL SYNTAX
+
+>Before redux-thunk
+store.dispatch({
+	type: '',
+	payload: 4
+});
+
+>After redux-thunk
+store.dispatch((dispatch)=>{
+	axios.get('').then((res)=>{
+		dispatch({
+			type: '',
+			payload: 4
+		});
+	}).catch((err)=>{
+		dispatch({
+			type: 'SOME_ERROR'
+		});
+	});
+});
+
+REFER https://www.youtube.com/watch?v=1QI-UE3-0PUsyntax
+Just for the 
+

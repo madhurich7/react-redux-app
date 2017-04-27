@@ -1,0 +1,34 @@
+state : {
+	users : [],
+	albums : [],
+	photos : []
+}
+
+
+state = users;
+state = albums;
+state = photos; 
+
+
+state = {
+			name: state.name + " changed",
+			data: action.payload,
+			isClicked: true
+		}; // name : data : isClicked
+
+
+
+
+//name, data, isclicked, isAlbums, alumbs
+state = {
+			isAlbums: true,
+			albums: action.payload
+		};	
+		
+
+
+		case "THUMBNAILS": 
+		state =  {
+			isPhotos: true,
+			thumbnails: action.payload
+		};	
